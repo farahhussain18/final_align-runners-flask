@@ -1,26 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Create your runner profile</h2>
-<form method="post" class="form">
-  <label>
-    Name
-    <input name="name" placeholder="Casey" required />
+<h2 class="mb-6 text-2xl font-bold">Create your runner profile</h2>
+
+<form method="post" class="mx-auto grid max-w-md gap-4">
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">Name</span>
+    <input name="name" required placeholder="Casey"
+           class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
-  <label>
-    Age
-    <input name="age" type="number" min="16" placeholder="28" />
+
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">Age</span>
+    <input name="age" type="number" min="16" placeholder="28"
+           class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
-  <label>
-    City
-    <input name="city" placeholder="Vancouver" />
+
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">City</span>
+    <input name="city" placeholder="Vancouver"
+           class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
-  <label>
-    Pace (min/km)
-    <input name="pace" placeholder="5:30 or 5.5" required />
+
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">Pace (min/km)</span>
+    <input name="pace" required placeholder="5:30 or 5.5"
+           class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
-  <label>
-    Favorite distance
-    <select name="fav_distance">
+
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">Favorite distance</span>
+    <select name="fav_distance"
+            class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500">
       <option value="">— choose —</option>
       <option>5K</option>
       <option>10K</option>
@@ -29,10 +39,15 @@
       <option>Ultra</option>
     </select>
   </label>
-  <label>
-    Bio
-    <textarea name="bio" rows="4" placeholder="Trail goblin. Coffee after track?"></textarea>
+
+  <label class="grid gap-1">
+    <span class="text-sm text-neutral-300">Bio</span>
+    <textarea name="bio" rows="4" placeholder="Trail goblin. Coffee after track?"
+              class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500"></textarea>
   </label>
-  <button class="btn" type="submit">Save</button>
+
+  <button class="mt-2 rounded-xl bg-emerald-400 px-4 py-2 font-semibold text-black hover:brightness-95" type="submit">
+    Save
+  </button>
 </form>
 {% endblock %}
