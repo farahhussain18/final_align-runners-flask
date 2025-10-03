@@ -1,1 +1,12 @@
-<h1>Welcome to Align 🏃‍♀️❤️🏃</h1>
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Dating for Runners</h1>
+  <p>Match by pace, distance, and vibes. Local MVP, zero mystery.</p>
+  <div class="cta">
+    <a class="btn" href="{{ url_for('new_profile') }}">Create Profile</a>
+    <a class="btn-outline" href="{{ url_for('list_profiles') }}">Browse Profiles</a>
+  </div>
+</section>
+{% endblock %}
+

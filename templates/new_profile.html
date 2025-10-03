@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create your runner profile</h2>
+<form method="post" class="form">
+  <label>
+    Name
+    <input name="name" placeholder="Casey" required />
+  </label>
+  <label>
+    Age
+    <input name="age" type="number" min="16" placeholder="28" />
+  </label>
+  <label>
+    City
+    <input name="city" placeholder="Vancouver" />
+  </label>
+  <label>
+    Pace (min/km)
+    <input name="pace" placeholder="5:30 or 5.5" required />
+  </label>
+  <label>
+    Favorite distance
+    <select name="fav_distance">
+      <option value="">— choose —</option>
+      <option>5K</option>
+      <option>10K</option>
+      <option>Half</option>
+      <option>Marathon</option>
+      <option>Ultra</option>
+    </select>
+  </label>
+  <label>
+    Bio
+    <textarea name="bio" rows="4" placeholder="Trail goblin. Coffee after track?"></textarea>
+  </label>
+  <button class="btn" type="submit">Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Runner profiles</h2>
+
+{% if profiles %}
+  <div class="cards">
+    {% for p in profiles %}
+      <div class="card">
+        <h3>{{ p.name }}</h3>
+        <p><strong>Pace:</strong> {{ '%.2f'|format(p.pace) }} min/km</p>
+        {% if p.fav_distance %}<p><strong>Fav distance:</strong> {{ p.fav_distance }}</p>{% endif %}
+        {% if p.city %}<p><strong>City:</strong> {{ p.city }}</p>{% endif %}
+        {% if p.bio %}<p class="bio">{{ p.bio }}</p>{% endif %}
+        <a class="btn" href="{{ url_for('matches') }}?for={{ p.id }}">Find matches</a>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No profiles yet. <a href="{{ url_for('new_profile') }}">Create the first one</a>.</p>
+{% endif %}
+{% endblock %}

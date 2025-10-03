@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Matches for {{ me.name }}</h2>
+<p><strong>Your pace:</strong> {{ '%.2f'|format(me.pace) }} min/km{% if me.fav_distance %}, <strong>Fav distance:</strong> {{ me.fav_distance }}{% endif %}</p>
+
+{% if matches %}
+  <div class="cards">
+    {% for p in matches %}
+      <div class="card">
+        <h3>{{ p.name }}</h3>
+        <p><strong>Pace:</strong> {{ '%.2f'|format(p.pace) }} min/km</p>
+        {% if p.fav_distance %}<p><strong>Fav distance:</strong> {{ p.fav_distance }}</p>{% endif %}
+        {% if p.city %}<p><strong>City:</strong> {{ p.city }}</p>{% endif %}
+        {% if p.bio %}<p class="bio">{{ p.bio }}</p>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No good matches yet. Add more profiles!</p>
+{% endif %}
+{% endblock %}
