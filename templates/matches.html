@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-2 text-2xl font-bold">Matches for {{ me.name }}</h2>
+<p class="mb-6 text-neutral-300">
+  <span class="font-semibold">Your pace:</span> {{ '%.2f'|format(me.pace) }} min/km
+  {% if me.fav_distance %}<span class="ml-2 font-semibold">• Fav distance:</span> {{ me.fav_distance }}{% endif %}
+</p>
+
+{% if matches %}
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {% for p in matches %}
+      <div class="rounded-2xl border border-neutral-800 bg-neutral-900 p-4 shadow-sm">
+        <h3 class="text-lg font-bold">{{ p.name }}</h3>
+        <p class="text-sm"><span class="font-semibold">Pace:</span> {{ '%.2f'|format(p.pace) }} min/km</p>
+        {% if p.fav_distance %}<p class="text-sm"><span class="font-semibold">Fav distance:</span> {{ p.fav_distance }}</p>{% endif %}
+        {% if p.city %}<p class="text-sm"><span class="font-semibold">City:</span> {{ p.city }}</p>{% endif %}
+        {% if p.bio %}<p class="mt-2 text-sm text-neutral-400">{{ p.bio }}</p>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-center">
+    <p class="text-neutral-300">No good matches yet. Add more profiles!</p>
+  </div>
+{% endif %}
+{% endblock %}

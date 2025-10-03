@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Align • Dating for Runners</title>
+
+  <!-- Tailwind (CDN for fast prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Your custom overrides last -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
+  <!-- Nav -->
+  <nav class="sticky top-0 z-40 w-full border-b border-neutral-800 bg-neutral-950/80 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="{{ url_for('home') }}" class="text-lg font-extrabold tracking-wide">
+        Align <span class="text-emerald-400">• runners</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="{{ url_for('list_profiles') }}" class="text-sm text-neutral-300 hover:text-white">Profiles</a>
+        <a href="{{ url_for('new_profile') }}"
+           class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-semibold text-black hover:brightness-95">
+          Create Profile
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="mx-auto max-w-3xl px-4 pt-4">
+        {% for m in messages %}
+          <div class="mb-3 rounded-xl border border-emerald-700/40 bg-emerald-900/30 px-4 py-3 text-emerald-200">
+            {{ m }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Page content -->
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="mt-12 border-t border-neutral-800 py-6 text-center text-neutral-400">
+    Find your pace, find your person.
+  </footer>
+</body>
+</html>

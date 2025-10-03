@@ -1,1 +1,18 @@
-<h1>Welcome to Align 🏃‍♀️❤️🏃</h1>
+{% extends "base.html" %}
+{% block content %}
+<section class="py-16 text-center">
+  <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+    Dating for Runners
+  </h1>
+  <p class="mx-auto mt-3 max-w-xl text-neutral-400">
+    Match by pace, distance, and vibes. Local MVP, zero mystery.
+  </p>
+
+  <div class="mt-6 flex justify-center gap-3">
+    <a class="rounded-xl bg-emerald-400 px-5 py-3 font-semibold text-black hover:brightness-95"
+       href="{{ url_for('new_profile') }}">Create Profile</a>
+    <a class="rounded-xl border border-emerald-400 px-5 py-3 font-semibold text-emerald-400 hover:bg-emerald-950/40"
+       href="{{ url_for('list_profiles') }}">Browse Profiles</a>
+  </div>
+</section>
+{% endblock %}
