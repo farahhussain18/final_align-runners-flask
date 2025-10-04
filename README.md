@@ -1,4 +1,3 @@
-
 ---
 title: Align Dating App for Runners
 emoji: 🏃‍♀️❤️
@@ -8,8 +7,6 @@ sdk: docker
 app_file: app.py
 pinned: false
 ---
-
-
 Align 🏃❤️ — A Dating Web App for Runners
 
 Align is a simple Flask-based web application that helps runners create profiles, explore others, and find matches based on pace and favorite distances. This project is an MVP (Minimum Viable Product) meant to demonstrate multi-page navigation, profile persistence, and basic matching logic.
