@@ -1,13 +1,12 @@
 ---
 title: Align Dating App for Runners
-emoji: 🏃‍♀️❤️
+emoji: 🏃❤️
 colorFrom: blue
 colorTo: pink
 sdk: docker
 app_file: app.py
 pinned: false
 ---
-
 
 Align 🏃❤️ — A Dating Web App for Runners
 
