@@ -111,3 +111,25 @@ Feel free to fork, modify, and build upon it.
 👟 Inspiration
 
 Built with ❤️ by runners, for runners — because finding your pace should also mean finding your person.
+
+🔑 Environment Setup for AI Features
+
+This app supports AI-generated runner bios using Together.ai.
+To enable it:
+
+Get an API key from Together.ai
+.
+
+In the project root, create a file called .env:
+
+touch .env
+
+
+Add the following line to .env (replace with your actual key):
+
+TOGETHER_API_KEY=your_really_long_key_here
+
+
+Make sure .env is listed in .gitignore (already configured), so your secret is never pushed to GitHub.
+
+Without a key, the app will gracefully fall back to a simple template bio.
