@@ -3,30 +3,35 @@
 <h2 class="mb-6 text-2xl font-bold">Create your runner profile</h2>
 
 <form method="post" class="mx-auto grid max-w-md gap-4">
+  <!-- Name -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">Name</span>
     <input name="name" required placeholder="Casey"
            class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
 
+  <!-- Age -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">Age</span>
     <input name="age" type="number" min="16" placeholder="28"
            class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
 
+  <!-- City -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">City</span>
     <input name="city" placeholder="Vancouver"
            class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
 
+  <!-- Pace -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">Pace (min/km)</span>
     <input name="pace" required placeholder="5:30 or 5.5"
            class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
   </label>
 
+  <!-- Fav distance -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">Favorite distance</span>
     <select name="fav_distance"
@@ -40,9 +45,25 @@
     </select>
   </label>
 
+  <!-- AI keywords + Generate -->
+  <div class="grid gap-2">
+    <label class="text-sm text-neutral-300">AI bio keywords (comma-separated)</label>
+    <div class="flex gap-2">
+      <input id="bioKeywords" placeholder="trail, sunrise runs, coffee, marathon training"
+             class="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500" />
+      <button id="genBioBtn" type="button"
+              class="shrink-0 rounded-xl bg-emerald-400 px-3 py-2 font-semibold text-black hover:brightness-95">
+        ✨ Generate
+      </button>
+    </div>
+    <p id="bioStatus" class="hidden text-sm text-neutral-400">Generating…</p>
+  </div>
+
+  <!-- Bio -->
   <label class="grid gap-1">
     <span class="text-sm text-neutral-300">Bio</span>
-    <textarea name="bio" rows="4" placeholder="Trail goblin. Coffee after track?"
+    <textarea id="bioField" name="bio" rows="5"
+              placeholder="Trail goblin. Coffee after track?"
               class="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500"></textarea>
   </label>
 
@@ -50,4 +71,40 @@
     Save
   </button>
 </form>
+
+<script>
+  const genBtn = document.getElementById('genBioBtn');
+  const kwInput = document.getElementById('bioKeywords');
+  const bioField = document.getElementById('bioField');
+  const statusEl = document.getElementById('bioStatus');
+
+  genBtn?.addEventListener('click', async () => {
+    const kws = kwInput.value.trim();
+    if (!kws) { alert('Please enter some keywords.'); return; }
+
+    statusEl.classList.remove('hidden');
+    statusEl.textContent = 'Generating…';
+
+    try {
+      const res = await fetch('{{ url_for("generate_bio") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ keywords: kws })
+      });
+
+      if (!res.ok) {
+        const msg = await res.text();
+        statusEl.textContent = msg || 'Could not generate bio.';
+        return;
+      }
+
+      const text = await res.text();
+      bioField.value = text;
+      statusEl.textContent = 'Bio generated — edit as you like!';
+      setTimeout(() => statusEl.classList.add('hidden'), 1500);
+    } catch (e) {
+      statusEl.textContent = 'Network error.';
+    }
+  });
+</script>
 {% endblock %}

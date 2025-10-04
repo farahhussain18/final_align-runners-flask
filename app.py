@@ -1,5 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import json, os, time
+from dotenv import load_dotenv
+
+# Load variables from .env file
+load_dotenv()
+
 
 app = Flask(__name__)
 app.secret_key = "dev-only-local-secret"  # fine for local dev
@@ -28,6 +33,53 @@ def get_profile(profile_id):
         if str(p["id"]) == str(profile_id):
             return p
     return None
+
+
+def ai_generate_bio_together(keywords: str) -> str:
+    """
+    Expand short keywords into a friendly runner bio using Together.ai.
+    Tone: warm, genuine, lightly witty, 2–4 sentences.
+    Falls back to a non-AI template if the API key is missing or the call fails.
+    """
+    key = os.getenv("TOGETHER_API_KEY")
+    prompt = (
+        "You are writing a short dating-app bio for a runner. "
+        "Keep it 2–4 sentences, warm, genuine, a touch witty. "
+        "If pace or distance is provided, weave it in naturally. "
+        f"Keywords: {keywords}\n\n"
+        "Output just the bio text, no quotation marks, no markdown."
+    )
+
+    if not key:
+        base = keywords.replace(",", " •")
+        return (
+            f"Runner into {base}. Long runs, post-run coffee, and cheering at finish lines. "
+            "Let’s match pace and swap routes."
+        )
+
+    try:
+        from together import Together
+        client = Together(api_key=key)
+
+        resp = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": "You craft concise, likable bios for runners."},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.8,
+            max_tokens=160,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception:
+        return (
+            f"Runner into {keywords}. Training, trails, and good playlists keep me moving. "
+            "If you like sunrise miles and post-run snacks, we’ll get along."
+        )
+
+
+
+
 
 @app.route("/")
 def home():
@@ -78,6 +130,25 @@ def new_profile():
         return redirect(url_for("list_profiles"))
 
     return render_template("new_profile.html")
+
+
+@app.route("/ai/generate_bio", methods=["POST"])
+def generate_bio():
+    """
+    API endpoint to generate a runner bio from keywords.
+    Expects a form field 'keywords'.
+    Returns the AI-generated bio text as plain text.
+    """
+    keywords = request.form.get("keywords", "").strip()
+    if not keywords:
+        return "Please provide some keywords.", 400
+
+    bio = ai_generate_bio_together(keywords)
+    return bio
+
+
+
+
 
 @app.route("/matches")
 def matches():
